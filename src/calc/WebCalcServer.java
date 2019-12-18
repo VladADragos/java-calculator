@@ -71,10 +71,8 @@ public class WebCalcServer {
 
     private String getPage(double result) {
         PageBuilder pb = new PageBuilder();
-        return pb.addTitle("Welcome to WebCalc")
-                .addH1("Welcome to WebCalc")
-                .addForm("/", "Enter expression", Arrays.asList("Expression"))
-                .addParagraph("Result = " + result)
+        return pb.addTitle("Welcome to WebCalc").addH1("Welcome to WebCalc")
+                .addForm("/", "Enter expression", Arrays.asList("Expression")).addParagraph("Result = " + result)
                 .toString();
     }
 
@@ -108,9 +106,7 @@ public class WebCalcServer {
 
         PageBuilder addForm(String action, String legend, List<String> names) {
             StringBuilder sb = new StringBuilder();
-            sb.append("<form action=\"").append(action)
-                    .append("\" method=\"POST\">")
-                    .append("<fieldset><legend>")
+            sb.append("<form action=\"").append(action).append("\" method=\"POST\">").append("<fieldset><legend>")
                     .append(legend).append("</legend>");
             for (String name : names) {
                 sb.append(name);
@@ -142,4 +138,3 @@ public class WebCalcServer {
         }
     }
 }
-

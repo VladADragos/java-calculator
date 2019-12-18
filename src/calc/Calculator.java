@@ -50,7 +50,6 @@ public class Calculator {
             // If the scanned character is an operand (number here),
             // push it to the stack.
             if (!isSpecialChar(s)) {
-                // double l = Double.parseDouble(s);
                 stack.push(Double.parseDouble(s));
             }
 
@@ -60,29 +59,10 @@ public class Calculator {
                 double val1 = stack.pop();
                 double val2 = stack.pop();
 
-                switch (s) {
-                case "+":
-                    stack.push(val2 + val1);
-                    break;
-
-                case "-":
-                    stack.push(val2 - val1);
-                    break;
-
-                case "/":
-                    stack.push(val2 / val1);
-                    break;
-
-                case "*":
-                    stack.push(val2 * val1);
-                    break;
-                case "^":
-                    stack.push(Math.pow(val2, val1));
-                    break;
-                }
+                stack.push(applyOperator(s, val1, val2));
             }
         }
-        return Double.valueOf(stack.pop());
+        return (double) stack.pop();
     }
 
     double applyOperator(String op, double d1, double d2) {
@@ -109,7 +89,6 @@ public class Calculator {
     List<String> infix2Postfix(List<String> infix) {
         // initializing empty String for result
         List<String> result = new ArrayList<String>();
-
         // initializing empty stack
         Stack<String> stack = new Stack<>();
 
@@ -129,18 +108,20 @@ public class Calculator {
             // If the scanned character is an ')', pop and output from the stack
             // until an '(' is encountered.
             else if (c.equals(")")) {
-                while (!stack.isEmpty() && !stack.peek().equals("("))
+                while (!stack.isEmpty() && !stack.peek().equals("(")) {
                     result.add(stack.pop());
+                    // continue;
 
-                if (!stack.isEmpty() && !stack.peek().equals(")"))
-                    new RuntimeException("invalid expression");
-                // return null; // invalid expression
-                else
+                }
+                if (!stack.isEmpty()) {
+
                     stack.pop();
+                }
+
             } else // an operator is encountered
             {
-                while (!stack.isEmpty() && !stack.peek().equals("(") && getPrecedence(c) <= getPrecedence(stack.peek())
-                        && !c.equals("^")) {
+
+                while (!stack.isEmpty() && getPrecedence(c) <= getPrecedence(stack.peek()) && !c.equals("^")) {
                     result.add(stack.pop());
                 }
                 stack.push(c);
@@ -168,7 +149,7 @@ public class Calculator {
         } else if ("^".contains(op)) {
             return 4;
         } else {
-            throw new RuntimeException(OP_NOT_FOUND);
+            return 1;
         }
     }
 

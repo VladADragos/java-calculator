@@ -163,7 +163,10 @@ class Test {
         List<String> tokens = calculator.tokenize(infix);
         List<String> postfix = calculator.infix2Postfix(tokens);
         String result = String.join(" ", postfix);
+        // out.println(result.equals);
         out.println(result.equals(expected));
+
+        // out.println(result.equals(expected));
     }
 
     // Evaluation
